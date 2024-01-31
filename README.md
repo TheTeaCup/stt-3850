@@ -31,3 +31,15 @@
 
 # Data Visualization / R Graphics
 - 
+
+# DYPLR Package
+- arrange : for sorting
+- select : for selecting columns
+- filter : for filtering or selecting rows
+- mutate : for add new column
+- group_by : for grouping data
+- summarize : for summarizing grouped data
+- top_m : deleting the top n?
+
+# pipe operator
+- `%>%`
