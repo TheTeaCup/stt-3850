@@ -2,7 +2,7 @@ hist(mtcars$mpg)
 barplot(table(x))
 boxplot(mtcars$mpg)
 summary(mtcars$mpg)
-plot(mtcars$wt, mtcars$mpg)
+plot(mtcars$wt, mtcars$mpg);
 
 library(ggplot2)
 
