@@ -43,3 +43,11 @@
 
 # pipe operator
 - `%>%`
+
+# EDA (Exploratory Data Analysis)
+- Basic Plot
+- Box Plot
+- Bar Plot
+- Histogram
+- Scatterplot
+- 
