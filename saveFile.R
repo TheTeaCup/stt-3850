@@ -48,7 +48,27 @@ IRIS_graph <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
 IRIS_graph + labs(
   title = "Figure 1. Scatterplot of Iris Petal Width vs Petal Length",
   x = "LENGTH",
-  y = "WIDTH"
-                  )
+  y = "WIDTH")
 
 library(tidyverse)
+
+ggplot(iris, aes(x=Petal.Length)) + geom_histogram()
+dim(iris)
+head(iris)
+
+barplot(table(iris$Species))
+
+barplot(iris$Petal.Length)
+
+ggplot(iris, aes(x=Species)) + geom_bar()
+
+head(iris$Petal.Length)
+
+ggplot(iris, aes(x=Petal.Length)) + geom_histogram(color = "white") + facet_wrap(iris$Species)
+boxplot(iris$Petal.Length)
+ggplot(iris, aes(y=Petal.Length, x=factor(Species))) + geom_boxplot()
+
+x <- c(20, 21, 22, 23, 24)
+mean(x)
+median(x)
+
