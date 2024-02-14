@@ -1,0 +1,168 @@
+---
+title: 'Basic Regression and Correlation Part 2 '
+output:
+  html_document:
+    df_print: paged
+---
+
+Let's review our discussion of the use of the Pearson correlation coefficient using the Absence.csv data.
+
+```{r}
+df <- read.csv("Absence.csv")
+```
+
+Let's first look at the scatterplot of Quiz vs Absences.  
+```{r}
+library(ggplot2)
+ggplot(df,aes(x=Absences,y=Quiz))+geom_point()
+```
+The scatteplot indicates at least a moderate negative linear relationship between absences and quiz average.
+
+To confirm this, we can calculate the Pearson correlation coefficient r.
+
+```{r}
+cor(df$Quiz,df$Absences)
+```
+This is a negative number indicating negative linear relationship and it's closer to -1 than 0 indicating at least a moderate linear relationship.
+
+To see how outliers affect the correlation r, let's remove students with more than 10 absences.
+
+```{r}
+library(dplyr)
+df_less10 <- df %>% filter(Absences < 10)
+```
+
+Let's redo the correlation and scatterplot analyses without the outliers.
+
+```{r}
+ggplot(df_less10,aes(x=Absences,y=Quiz))+geom_point()
+```
+
+```{r}
+cor(df_less10$Quiz,df_less10$Absences)
+```
+Without the outliers, we can say that based on the data, there is still a moderate negative linear relationship between number of absences and quiz average.
+
+If we want to predict quiz average based on number of absences, we need to do a regression analyses. The R commands needed to do this are the lm() and the summary() functions. The lm() function will fit a linear model to the data and will find the slope and intercept of the best-fit line called the regression line.
+
+```{r}
+model1 <- lm(Quiz~Absences,data=df)
+summary(model1)
+```
+
+The table of Coefficients in the regression output will give the estimates of the intercept  and the slope as well as the standard errors of these estimates plus other useful measures (some measures such as the t-statistic and p-value will be discussed later in the semester). 
+
+From the table of coefficients,we get the estimate of the intercept of 77.1061 and the estimate of the slope of -5.5551 and therefore we get the equation Quiz = -5.5551 x Absences +77.1061.  This equation is called the equation of the regression or best-fit line. 
+
+We can use this equation to predict the quiz average of someone with 7 absences, for example, as follows.
+
+```{r}
+Predicted_Quiz = -5.5551 *  7 +77.1061
+Predicted_Quiz
+```
+The y-intercept of 77.1061 is the predicted or expected Quiz average for someone with 0 absences based on the model.
+
+The slope of -5.5551 is the expected rate of change in the quiz average per 1 day of absence, i.e. every 1 day of absence is expected to result into a drop of 5.55 points in quiz average, based on the model.
+
+The standard error of the estimate of the slope of 0.6199 is a measure of how much variation is expected for the estimate of the slope if new data are used in the modeling.  If you double this number and add and subtract the result from the estimate of the slope, you will get an interval of numbers where the true slope lies.
+
+```{r}
+lower = -5.5551 - 2*0.6199
+upper = -5.5551 + 2*0.6199
+c(lower,upper)
+
+```
+The true slope is expected to fall in this interval. 
+
+The Residual standard error of 14.65 points is the expected average prediction error if you use the model to predict quiz average based on number of absences.
+
+The Multiple R-squared value of  0.5935 says about 59.35% of the variation in Quiz average is explained by the number of absences.
+
+If two variables x and y have a perfect linear relationship, we will get a residual standard error of 0 and an r-squared of 1 which says 100% of the variation in y is explained by x.  To verify this, let's execute the following R chunk.
+
+```{r}
+x <- df$Quiz
+y <- x + 10  #if we add 10 points to every quiz
+df2 <- data.frame(x,y)
+ggplot(df2,aes(x=x,y=y))+geom_point()
+model2 <- lm(y~x,df2)
+summary(model2)
+```
+
+Finally, we can draw the regression line with the scatterplot as follows:
+
+```{r}
+ggplot(df,aes(x=Absences,y=Quiz))+geom_point()+geom_abline(slope=-5.5551,intercept=77.1061,color="red")
+```
+To get the residuals, we do as follows:
+```{r}
+model1$residuals
+```
+The minimum SSE is given by the SSE for the regression line and is equal to
+
+```{r}
+SSE <- sum(model1$residuals^2)
+SSE
+```
+
+Let's compute the residuals based on another line, say with equation y2 = -6x + 80. We know that this new line will have an SSE that can't be smaller than the SSE for the regression line
+
+```{r}
+y2.hat <- -6*df$Absences+80
+res2 <- df$Quiz-y2.hat
+SSE2 <- sum(res2^2)
+SSE2
+```
+For the (x,y) data above where there is a perfect linear relationship, the SSE based on the regression line is 0 so it's clear that any other line will yield a larger SSE. 
+
+```{r}
+SSE <- sum(model2$residuals^2)
+SSE
+```
+To get the slope without typing the value, we do as follows:
+
+```{r}
+model1$coefficients[2]
+```
+
+Similarly, to get the intercept, we do as follows:
+
+```{r}
+model1$coefficients[1]
+```
+
+Finally to get the predicted values for all the data points from the regression model, we do as follows:
+
+```{r}
+model1$fitted.values
+```
+
+ALternatively, we can also get these predicted values as follows:
+
+```{r}
+model1$coefficients[2]*df$Absences+model1$coefficients[1]
+```
+
+For model2, we get
+
+```{r}
+model2$fitted.values
+```
+Alternatively, we can get these values as follows:
+
+```{r}
+df$Quiz+10
+```
+
+Let's investigate the effect of outliers on the regression model.
+
+```{r}
+model3 <- lm(Quiz~Absences,data=df_less10)
+summary(model3)
+```
+Notice that removing the outliers change the estimates of the slope and intercept as well as the two goodness-of-fit measures (the residual standard error and the R-squared measures).  
+
+R-squared by the way is exactly the square of the correlation coefficient so it's also a measure of the strength of the linear relationship between the 2 variables. To verify this, we calculate
+```{r}
+cor(df$Quiz,df$Absences)^2
+```

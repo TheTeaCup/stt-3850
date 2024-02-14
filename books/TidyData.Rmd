@@ -1,0 +1,49 @@
+---
+title: "Data Importing and Tidy Data"
+output:
+  html_document:
+    df_print: paged
+---
+Let's import the UntidyNoHeading.csv data into R.
+```{r}
+df <- read.csv("UntidyNoHeading.csv")
+head(df)
+
+```
+
+Notice that the first row is treated as the header.  To fix this, we do as follows:
+```{r}
+df <- read.csv("UntidyNoHeading.csv",header=FALSE)
+head(df)
+```
+R will assign a name to each column when the data frame has no header. To rename a column, we can do as follows:
+
+```{r}
+library(dplyr)
+df <- df %>% rename(Name = V1, Exam1 = V2, Exam2 = V3, Exam3 = V4)
+head(df)
+```
+Notice that this data frame is not in tidy format because there are more columns than what is needed.We only need 3 columns for each of the variables (Name, ExamNumber and ExamScore).
+
+To convert this untidy or messy data into a tidy data format, we do as follows:
+
+```{r}
+library(tidyr)
+df_tidy <- pivot_longer(df, names_to = "Exam",values_to="Score",cols = Exam1:Exam3)
+head(df_tidy)
+```
+Alternatively, we can also specify the columns where the values come from as follows:
+
+```{r}
+df_tidy <- pivot_longer(df, names_to = "Exam",values_to="Score",cols = c(2,3,4))
+head(df_tidy)
+```
+We can also use negative indexing:
+
+```{r}
+df_tidy <- pivot_longer(df, names_to = "Exam",values_to="Score",cols = -1)
+head(df_tidy)
+```
+
+
+If  you are reading ModernDive, there are more examples of data importing and converting from untidy to tidy data format in Chapter 4. There's also a discussion there of the tidyverse package which contains most of the packages we have discussed so far such as the ggplot2, dplyr, tidyr, etc.  Read this section. 

@@ -50,4 +50,10 @@
 - Bar Plot
 - Histogram
 - Scatterplot
-- 
+
+# Correlation - linear relationship between 2 numeric/quantitive variables
+
+# Direction 
+- Positive : x increases and y increases
+- Negative : x decreases and y increases
+

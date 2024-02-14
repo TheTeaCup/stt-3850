@@ -1,0 +1,147 @@
+---
+title: 'EDA: Z-scores'
+output:
+  html_document:
+    df_print: paged
+---
+
+The z-score of a data value x is defines as $z = \frac{x-\mu}{\sigma}$ where $\mu$ is the mean of the data and $\sigma$ is the standard deviation of the data.  The z-score of a data value x is the number of standard deviations the data value is away from the mean.
+
+As an example, consider the ages of 5 students stored in a vector x:  
+
+```{r}
+x <- 21:25
+x
+```
+
+The z-scores of the ages of the 5 students can be calculated as:
+
+```{r}
+z <- (x-mean(x))/sd(x)
+z
+```
+
+Thus, the first student's age is about 1.265 standard deviations below the mean, the age of the 2nd student is about .632 standard deviation below the mean, the age of the 3rd student is 0 standard deviation from the mean, the age of the 4th student is 0.632 standard deviation above the mean and the age of the last student is 1.265 standard deviations above the mean.
+
+z-scores can be used to compare data that are not directly comparable. As an example, mpg of cars and weights of cars are not directly comparable since they measure 2 different kinds of variables. What can be said about the highest mpg and the highest weight in the mtcars data frame aside from they are both the highest values for the two variables? Which one is more extreme?
+
+To answer these questions, let's convert all the mpg data and all the wt data to z-scores:
+
+```{r}
+mpg.z <- (mtcars$mpg - mean(mtcars$mpg))/sd(mtcars$mpg)
+wt.z <- (mtcars$wt - mean(mtcars$wt))/sd(mtcars$wt)
+```
+
+The car with the highest mpg has a z-score of 
+
+```{r}
+max(mpg.z)
+```
+
+which means this car has an mpg that is about 2.29 standard deviations above the mean mpg.
+
+The heaviest car has a z-score of
+
+```{r}
+max(wt.z)
+```
+
+which means this car's weight is about 2.26 standard deviations above the nean weight of all cars in the mtcars data frame.
+
+Thus, since the z-score for the car with highest mpg is higher than the z-score for the heaviest car, we can say that highest mpg is more extreme than the highest weight.
+
+Converting all data values to z-scores is called standardizing the data.  When data is standardized, the mean and the standard deviation is standardized to 0 and 1, respectively.
+As an example,
+
+```{r}
+mean(mpg.z)
+mean(wt.z)
+sd(mpg.z)
+sd(wt.z)
+```
+
+The graph of the standardized data is essentially the graph of the original data but is shifted so that the new mean is 0 and re-scaled so that the new standard deviation is 1.To see this, let's look at the histograms of the mpg data and the standardized mpg data:
+
+```{r}
+library(ggplot2)
+ggplot(mtcars,aes(x=mpg))+geom_histogram(color="white",bins=5)
+```
+
+```{r}
+df <- data.frame(mpg.z)
+ggplot(df,aes(x=mpg.z))+geom_histogram(color="white",bins=5)
+```
+
+The boxplots of the standardized data amd the original data should have exactly the same shape:
+
+```{r}
+boxplot(mtcars$mpg)
+```
+
+```{r}
+boxplot(mpg.z)
+```
+
+z-scores can also be used to define measures of shape of a data set called skewness and kurtosis as follows:
+
+$skewness = mean(z^3)$ and $kurtosis = mean(z^4)$ where z is a vector containing the z-scores of the data.
+
+For a perfectly symmetric data, skewness = 0.  For a right-skewed data, skewness > 0 and for a left-skewed data, skewness < 0.
+
+Kurtosis is a measure for determining if a data has a heavier tail than the normal distribution or not.  The Normal distribution have a kurtosis of 3.  Heavier tailed distribution has a kurtosis > 3 and lighter tailed distribution has a kurtosis < 3.
+
+As an example, let's randomly generate 10000 data values from a Normal distribution with a mean of about 3.0 and a standard deviation of 0.25.
+
+```{r}
+x <- rnorm(10000,3,0.25)
+hist(x)
+```
+
+The standardized data can be stored in a vector z as follows:
+
+```{r}
+z <- (x-mean(x))/sd(x)
+```
+
+The skewness is then
+
+```{r}
+mean(z^3)
+```
+
+which is practically 0.  
+
+The kurtosis is 
+
+```{r}
+mean(z^4)
+```
+
+which is practically 3 as expected for Normally distributed data.
+
+What can we say about the skewness and kurtosis of the mpg data from the mtcars data frame?
+
+It's skewness is
+```{r}
+mean(mpg.z^3)
+```
+
+which is positive suggesting that the mpg data is right-skewed.  This is supported by the following histogram:
+
+```{r}
+hist(mpg.z)
+```
+
+It's kurtosis is
+
+```{r}
+mean(mpg.z^4)
+```
+
+which is less than 3 suggesting that the mpg data's distribution is lighter tailed than the Normal distribution.  The histogram for the stanardized normal data z is given below:
+
+```{r}
+hist(z)
+```
+
+Notice that the z-scores for the mpg data are in the range -2 to 2 whereas for Normally distributed data, the z-scores are expected to be generally in the range -3 to 3.  Heavier tailed distributions will have z-scores in a wider range around 0.

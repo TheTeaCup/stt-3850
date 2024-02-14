@@ -1,0 +1,55 @@
+---
+title: "Basic Regression and Correlation"
+output:
+  html_document:
+    df_print: paged
+---
+
+The main goal is to determine if there is a linear relationship between two or more numeric variables and if there is a relationship the secondary goal is to come up with an equation or a formula that can be used to predict one variable (the response variable) based on the other variable (the explanatory or predictor variable) .
+
+Let's use the iris data set to illustrate a typical regression and correlation analyses.
+
+All regression and correlation analyses start with a question like "Which variable is the best predictor of petal length?".
+
+Let's explore the iris dataset to answer this question.
+
+```{r}
+head(iris)
+```
+Rephrasing the question, we want to determine which of the 3 variables Sepal.Length, Sepal.Width and Petal.Width is the best predictor of Petal.Length.
+
+We can look at scatterplots.
+
+```{r}
+library(ggplot2)
+ggplot(iris,aes(x=Sepal.Length, y = Petal.Length))+geom_point()
+ggplot(iris,aes(x=Sepal.Width, y = Petal.Length))+geom_point()
+ggplot(iris,aes(x=Petal.Width, y = Petal.Length))+geom_point()
+```
+
+Just based on the scatterplots, it appears Petal.Width seems to be the best predictor because it appears this variable has the strongest linear relationship with Petal.Length.  In particular, based on the scatteplot, there is a moderate to strong positive linear relationship.   
+
+We can support these graphical analysis with a numerical measure called the Pearson correlation coefficient, a statistic that measure both the strength and direction of the linear relationship between two numeric variables.  
+
+This statistic, denoted by r, has the following properties.
+
+1. It is always in the interval [-1,1].
+2. Its sign determines the direction.
+3. The closer its value is to -1 or 1, the stronger the linear relationship, in general.
+4. This statistic is very sensitive to outliers so be careful when interpreting it, always look at the scatterplot.
+5. This statistic is not affected by changing the units of the data.
+
+How do you calculate this in R? Let's calculate the correlation coeffcient r for the Petal.Length and Petal.Width data.
+
+```{r}
+cor(iris$Petal.Width,iris$Petal.Length)
+```
+This is clearly in the interval [-1,1], it's a positive number indicating there is a positive linear relationship between the two variables.  It's pretty close to 1 suggesting a strong linear relationship which is supported by the scatterplot (there are no clear outliers that could affect the correlation coefficient).  
+
+```{r}
+cor(iris$Sepal.Width,iris$Petal.Length)
+cor(iris$Sepal.Length,iris$Petal.Length)
+```
+From these calculations, it's evident that Petal.Width is the best predictor of Petal.Length because it has the strongest correlation with Petal.Length.
+
+
