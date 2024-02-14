@@ -80,7 +80,7 @@ max(x)-min(x)
 IQR(x)
 quantile(x, .25)
 
-# Feburary 13th, 2024
+# February 13th, 2024
 
 qqnorm(mtcars$mpg)
 
@@ -89,3 +89,15 @@ IQR(mtcars$mpg)
 quantile(mtcars$mpg, 0.75) + 1.5 * IQR(mtcars$mpg)
 
 mtcars[mtcars$mpg > quantile(mtcars$mpg, 0.75) + 1.5 * IQR(mtcars$mpg), ]
+
+# February 14th, 2024
+
+ggplot(iris,aes(x=Sepal.Length, y = Petal.Length))+geom_point()
+
+ggplot(iris,aes(x=Sepal.Width, y = Petal.Length))+geom_point()
+
+ggplot(iris,aes(x=Petal.Width, y = Petal.Length))+geom_point()
+
+# correlation 
+cor(iris$Petal.Width,iris$Petal.Length)
+
