@@ -24,14 +24,11 @@ async function surveyIslander() {
 
   setTimeout(async () => {
     for (let i = 0; i < islanderData.length; i++) {
-      //console.log(islanderData[i].url)
+      console.log("surverying islander: " + (i + 1));
       await page.goto(islanderData[i].url);
 
-      // this does not work at the moment
       await page.evaluate(() => {
-        [...document.querySelectorAll(".elements button")]
-          .find((element) => element.textContent === "Obtain consent from ")
-          .click(); // document.querySelector('button[id=t2tab]').click();
+        document.querySelector('button[id=t2tab]').click();
       });
     }
   }, 1000);
