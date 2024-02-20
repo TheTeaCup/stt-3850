@@ -1,10 +1,19 @@
 const puppeteer = require("puppeteer");
-//const {setTimeout} = require("node:timers/promises");
+const fs = require("fs");
 require("dotenv").config({
   path: "./.env",
 });
 
 const islanderData = require("./islanderData.json");
+
+let questions = [
+  "Are you male or female?",
+  "How many years old are you?",
+  "How tall are you in centimetres?",
+  "How many times have you married?",
+  "How many siblings do you have?",
+  "How many children do you have?",
+];
 
 async function surveyIslander() {
   const browser = await puppeteer.launch({
@@ -24,13 +33,55 @@ async function surveyIslander() {
 
   setTimeout(async () => {
     for (let i = 0; i < islanderData.length; i++) {
-      console.log("surverying islander: " + (i + 1));
+      console.log(
+        i +
+          1 +
+          ". surverying islander: " +
+          islanderData[i].url.split("?id=")[1] +
+          " of " +
+          islanderData[i].village
+      );
       await page.goto(islanderData[i].url);
 
       await page.evaluate(() => {
-        document.querySelector('button[id=t2tab]').click();
+        document.querySelector("button[id=t2tab]").click();
       });
+
+      // this runs the survey
+      /*
+      await page.evaluate(() => {
+        [...document.querySelectorAll('.task span')].find(element => element.textContent === 'Complete Survey').click();
+      }); 
+      */
+
+      // this gets the responses
+
+      await page.waitForSelector(".taskresultquestion");
+
+      // Extract question and response pairs
+      const surveyResults = await page.evaluate(() => {
+        const questions = Array.from(
+          document.querySelectorAll(".taskresultquestion")
+        ).map((question) => question.textContent.trim());
+        const responses = Array.from(
+          document.querySelectorAll(".taskresultresponse")
+        ).map((response) => response.textContent.trim());
+        return questions.map((question, index) => ({
+          question,
+          response: responses[index],
+        }));
+      });
+
+      islanderData[i].responses = surveyResults;
+
+      // Write the updated data back to the JSON file
+      fs.writeFileSync(
+        "islanderData-surveyed.json",
+        JSON.stringify(islanderData, null, 2)
+      );
     }
+    console.log("All islanders surveyed!");
+    browser.close();
   }, 1000);
 }
 
