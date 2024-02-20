@@ -2,24 +2,25 @@ hist(mtcars$mpg)
 barplot(table(x))
 boxplot(mtcars$mpg)
 summary(mtcars$mpg)
-plot(mtcars$wt, mtcars$mpg);
-
+plot(mtcars$wt, mtcars$mpg)
 library(ggplot2)
 
-ggplot(data=mtcars, mapping=aes())
-ggplot(data=mtcars, mapping=aes(x=wt, y=mpg))
-ggplot(data=mtcars, 
-    mapping = aes(x = wt, y = mpg), 
-    ylab("Miles/(US) gallon"), 
-    xlab("Weight (1000 lbs)"))
+ggplot(data = mtcars, mapping = aes())
+ggplot(data = mtcars, mapping = aes(x = wt, y = mpg))
+ggplot(
+  data = mtcars,
+  mapping = aes(x = wt, y = mpg),
+  ylab("Miles/(US) gallon"),
+  xlab("Weight (1000 lbs)")
+)
 
 palette <- c(automatic = "#377EB8", manual = "#E41A1C")
 
 # Set the position
 ggplot(mtcars, aes(fcyl, fill = fam)) +
-  geom_bar(position = 'dodge') +
+  geom_bar(position = "dodge") +
   labs(x = "Number of Cylinders", y = "Count")
-  scale_fill_manual("Transmission", values = palette)
+scale_fill_manual("Transmission", values = palette)
 
 ggplot(mtcars, aes(mpg, 0)) +
   geom_jitter() +
@@ -294,8 +295,8 @@ palette <- brewer.pal(5, "RdYlBu")[-(2:4)]
 ggplot(gm2007, aes(x = lifeExp, y = country, color = lifeExp)) +
   geom_point(size = 4) +
   geom_segment(aes(xend = 30, yend = country), size = 2) +
-  geom_text(aes(label = round(lifeExp,1)), color = "white", size = 1.5) +
-  scale_x_continuous("", expand = c(0,0), limits = c(30,90), position = "top") +
+  geom_text(aes(label = round(lifeExp, 1)), color = "white", size = 1.5) +
+  scale_x_continuous("", expand = c(0, 0), limits = c(30, 90), position = "top") +
   scale_color_gradientn(colors = palette) +
   labs(title = "Highest and lowest life expectancies, 2007", caption = "Source: gapminder")
 
@@ -311,5 +312,3 @@ plt_country_vs_lifeExp +
     arrow = arrow(length = unit(0.2, "cm"), type = "closed"),
     color = "grey40"
   )
-
-

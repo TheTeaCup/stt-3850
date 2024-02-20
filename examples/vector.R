@@ -5,8 +5,8 @@ A_vector <- c(1, 2, 3)
 B_vector <- c(4, 5, 6)
 
 # Take the sum of A_vector and B_vector
-total_vector <-  A_vector + B_vector
-  
+total_vector <- A_vector + B_vector
+
 # Print out total_vector
 total_vector
 
@@ -21,7 +21,7 @@ names(roulette_vector) <- days_vector
 total_poker <- sum(poker_vector)
 
 # Total winnings with roulette
-total_roulette <-  sum(roulette_vector)
+total_roulette <- sum(roulette_vector)
 
 # Total winnings overall
 total_week <- total_roulette + total_poker
@@ -37,7 +37,7 @@ poker_midweek <- poker_vector[c(2, 3, 4)]
 
 # Select poker results for Monday, Tuesday and Wednesday
 poker_start <- poker_vector[c("Monday", "Tuesday", "Wednesday")]
-  
+
 # Calculate the average of the elements in poker_start
 mean(poker_start)
 
@@ -51,5 +51,5 @@ factor_sex_vector <- factor(sex_vector)
 factor_sex_vector
 
 #       OUTPUT
-#[1] Male   Female Female Male   Male  
-#Levels: Female Male
+# [1] Male   Female Female Male   Male
+# Levels: Female Male
