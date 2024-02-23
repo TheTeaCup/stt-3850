@@ -39,10 +39,11 @@ async function surveyIslander() {
       });
 
       // this runs the survey
-      
       await page.evaluate(() => {
-        [...document.querySelectorAll('.task span')].find(element => element.textContent === 'Complete Survey').click();
-      }); 
+        [...document.querySelectorAll(".task span")]
+          .find((element) => element.textContent === "Complete Survey")
+          .click();
+      });
     }
     console.log("All islanders surveyed!");
 
