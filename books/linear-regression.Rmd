@@ -1,0 +1,64 @@
+---
+title: "Multiple Linear Regression Model"
+output:
+  html_document:
+    df_print: paged
+---
+
+Recall that earlier we found that Petal.Width is the best predictor of Petal.Length.  If we fit a SLRM to the iris data for predicting Petal.Length based on Petal.Width, we get the following:
+
+```{r}
+model1 <- lm(Petal.Length~Petal.Width,data=iris)
+summary(model1)
+```
+The estimate of the coefficient of Petal.Width of 2.22994 says that a one cm increase in Petal.Width is expected to result in about 2.23 cm increase in Petal.Length.
+
+The Residual standard error of 0.4782 is the expected average prediction error if the model is used to predict Petal.Length based on Petal.Width alone.  
+
+The R-squared value of 0.9271 says that about 93% of the variation in Petal.Length is explained by Petal.Width.  
+
+```{r}
+library(ggplot2)
+ggplot(iris,aes(x=Petal.Width,y=Petal.Length))+geom_point()+geom_abline(slope=model1$coefficients[2],intercept=model1$coefficients[1],color="red")
+```
+We can argue that the RSE (residual standard error) which is the average prediction error if the model is used for predicting Petal.Length based on Petal.Width is still quite large.  How can we make this smaller?
+
+One possible solution is to use MLRM. Let's add one more predictor to the model by finding the next best predictor.
+
+```{r}
+cor(iris$Petal.Length,iris$Petal.Width)
+cor(iris$Petal.Length,iris$Sepal.Length)
+cor(iris$Petal.Length,iris$Sepal.Width)
+```
+It appears that next to Petal.Width, Sepal.Length is the next best predictor so let's add this predictor to our model by fitting a MLRM with Petal.Width and Sepal.Length as predictors of Petal.Length.
+
+```{r}
+model2 <- lm(Petal.Length~Petal.Width + Sepal.Length,data=iris)
+summary(model2)
+```
+Let's interpret the estimats of the beta coefficients of the MLRM:
+
+The estimate of the coefficient of Petal.Width of 1.74810 says that a one cm increase in Petal.Width is expected to result in about 1.75 cm increase in Petal.Length, holding the Sepal.Length constant.
+
+The estimate of the coefficient of Sepal.Length of 0.54226 says that a one cm increase in Sepal.Length is expected to result in about 0.54 cm increase in Petal.Length, holding the Petal.Width constant.
+
+Both the Residual standard error and R-squared suggest that the MLRM will result into more accurate predictions of Petal.Length.  This is further supported by the following side-by-side boxplos and numerical summaries:
+
+
+```{r}
+boxplot(model1$residuals,model2$residuals)
+```
+
+```{r}
+
+summary(model1$residuals)
+summary(model2$residuals)
+```
+
+Let's add the 3rd predictor and see if adding another predictor is worth it.
+
+```{r}
+model3 <- lm(Petal.Length~Petal.Width + Sepal.Length + Sepal.Width,data=iris)
+summary(model3)
+```
+Notice that both RSE and R-squared again improved.  The question now is, are the improvements significant to offset the additional complication of adding more parameters to estimate and interpret?  The Principle of Parsimony in Statistical Modeling says if the improvement is not significant, choose the simpler model if choosing between or among several models. 

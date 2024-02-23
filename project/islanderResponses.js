@@ -7,15 +7,15 @@ require("dotenv").config({
 const islanderData = require("./islanderData.json");
 
 let questions = [
-  "Are you male or female?",
-  "How many years old are you?",
-  "How tall are you in centimetres?",
-  "How many times have you married?",
-  "How many siblings do you have?",
-  "How many children do you have?",
-];
+    "Are you male or female?",
+    "How many years old are you?",
+    "How tall are you in centimetres?",
+    "How many times have you married?",
+    "How many siblings do you have?",
+    "How many children do you have?",
+];  
 
-async function surveyIslander() {
+async function islanderResponses() {
   const browser = await puppeteer.launch({
     headless: false,
     defaultViewport: null,
@@ -47,13 +47,6 @@ async function surveyIslander() {
         document.querySelector("button[id=t2tab]").click();
       });
 
-      // this runs the survey
-      /*
-      await page.evaluate(() => {
-        [...document.querySelectorAll('.task span')].find(element => element.textContent === 'Complete Survey').click();
-      }); 
-      */
-
       // this gets the responses
 
       await page.waitForSelector(".taskresultquestion");
@@ -79,12 +72,14 @@ async function surveyIslander() {
         "islanderData-surveyed.json",
         JSON.stringify(islanderData, null, 2)
       );
+      
     }
-    console.log("All islanders surveyed!");
+    console.log("All islanders responses recieved!");
+
     browser.close();
   }, 1000);
 }
 
 (async () => {
-  await surveyIslander();
+  await islanderResponses();
 })();

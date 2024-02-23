@@ -1,0 +1,95 @@
+---
+title: "Intermediate R - Control Structures"
+output:
+  html_document:
+    df_print: paged
+---
+
+This lesson is about control structures which are statements or commands that will alter the sequential execution of statements.
+
+The first control structure/statement is the if statement and its variants. We will use the iris dataset.
+
+```{r}
+x <- iris$Petal.Length
+n<-length(x)
+if (x[n] > 2)
+    {print("1st element is medium")
+    print(iris$Species[1])}
+```
+Next is the if else statement.
+
+```{r}
+if (x[1] <= 2) 
+   print("short") else 
+         print("long")
+```
+Next is the if else if.
+
+```{r}
+if (x[1] >= 2) print("short") else if (x[1]  <= 0.5) 
+  {print("medium")
+   iris$Species[1]} else if (x[1]< 1) print("between 0.5 and 1") else         print("between 1 and 2") 
+```
+The next control structure is the for loop.
+
+This code will display the word "hello" 10 times.
+
+```{r}
+for (i in 1:10)
+  print("hello")
+```
+This code will display the word "hello" 5 times.
+```{r}
+j <- 2:6
+for (i in j)
+  print("hello")
+```
+This code will display the 1st 10 petal lengths.
+
+```{r}
+for (i in 1:10)
+  print(x[i])
+```
+```{r}
+x.inches <- numeric()
+for (i in 1:10)
+  {x.inches[i] <- x[i]/2.54
+  print(x[i])}
+x.inches
+```
+The following R chunk will create a new vector named category which will classify the first 10 flowers in the iris data set as either short if its petal length is less than 1 cm or medium if its petal length is between 1 and 2 cm or long if its petal length is greater than 2 cm.
+```{r}
+category <- character()
+x <- iris$Petal.Length
+for (i in 1:10)
+  if (x[i] < 1) category[i]<-"short" else if (x[i] >= 1 & x[i]<= 2)     category[i]<- "medium" else category[i]<-"long"
+category
+
+```
+
+Modify the code so it will do the classification for all flowers in the iris data set.
+
+```{r}
+category <- character()
+x <- iris$Petal.Length
+n<-length(x)
+for (i in 1:n)
+  if (x[i] < 1) category[i]<-"short" else if (x[i] >= 1   & x[i]<= 2)     category[i]<- "medium" else    
+  category[i]<-"long"
+category
+```
+
+What percent of the iris data set are classified as short, medium and long?
+
+```{r}
+table(category)/n*100
+```
+
+The case_when command within the dplyr can also be used to create the category variable.
+
+```{r}
+library(dplyr)
+new_iris <- iris %>% mutate(category = case_when(Petal.Length < 1 ~ "short",Petal.Length >=1 & Petal.Length <=2 ~ "medium",TRUE~"long"))
+new_iris$category
+```
+

@@ -1,0 +1,74 @@
+---
+title: "Models with 2 Predictors"
+output:
+  html_document:
+    df_print: paged
+---
+
+Let's fit a no interaction model for predicting Petal.Length based on Petal.Width and Sepal.Length.
+
+```{r}
+no_interaction<- lm(Petal.Length~Petal.Width + Sepal.Length, data = iris)
+summary(no_interaction)
+```
+The estimate of Petal.Width coefficient is 1.74810 so for every 1 cm increase in Petal.Width, Petal.Length is expected to increase by about 1.75 cm for iris flowers of the same Sepal.Length.
+
+The estimate of Sepal.Length coefficient is 0.54226 so for every 1 cm increase in Sepal.Length, Petal.Length is expected to increase by about 0.54 cm for iris flowers of the same Petal.Width.
+
+Let's now fit an interaction model for predicting Petal.Length based on Petal.Width and Sepal.Length.
+
+```{r}
+interaction<- lm(Petal.Length~Petal.Width * Sepal.Length, data = iris)
+summary(interaction)
+```
+
+Note the use of * instead of + when the predictors are specified in an interaction model and note the additional interaction coefficient in the result.
+
+In this model, the estimate of Petal.Width coefficient of 2.97115 is no longer the rate of change of Petal.Length per 1 cm increase in Petal.Width for iris flowers of the same Sepal.Length.  The rate of change of Petal.Length per 1 cm increase in Petal.Width is now 2.97115 + -0.22248 * Sepal.Length for iris flowers with that Sepal.Length.
+
+Note that the improvement of this interaction model compared with the no interaction model is marginal so this is a situation where the simpler model is preferable.
+
+Let us now fit a parallel slopes model using Petal.Width and Species as predictors since both have a realtionship with Petal.Length as indicated by the scatterplot and correlation between the 2 numeric variables and by the side-by-side boxplots below for the numeric and non-numeric variables.
+
+```{r}
+library(ggplot2)
+ggplot(iris,aes(x=factor(Species),y=Petal.Length))+geom_boxplot()
+```
+It's clear that knowing the specie is useful in predicting the Petal.Length so we will include Specie as a predictor in the model.
+
+Let's fit a parallel slopes model for predicting Petal.Length using Petal.Width and Species (a non-numeric variable) as predictors.
+
+Let's first create the dummy variables that will keep track of whether the Specie is setosa (x2.1), versicolor (x2.2) or virginica (no dummy variable is needed for this)
+
+```{r}
+a<-rep(1,50)
+b<-rep(0,100)
+x2.1<-c(a,b)
+x2.1
+d<-rep(0,50)
+x2.2<-c(d,a,d)
+x2.2
+
+```
+
+We need to create a new data frame containing all the data we need in the model.
+
+```{r}
+df <- data.frame(iris$Petal.Length,iris$Petal.Width,x2.1,x2.2)
+head(df)
+```
+
+
+We can then fit the model as follows:
+
+```{r}
+parallel <-lm(iris.Petal.Length~iris.Petal.Width+x2.1+x2.2,data=df)
+summary(parallel)
+```
+The estimate of the intercept for the baseline category (virginica) is the 1st coefficient of 3.4881 which is the expected Petal.Length of a virginica with 0 Petal.Width which does not make sense or not meaningful. 
+
+The coefficient of Petall.Width of 1.0187 says a 1 cm increase in Petal.Width is expected to result in an increase of about 1.02 cm in Petal.Length for iris flowers of the same specie.  
+
+The coefficient -2.2767 of the indicator variable x2.1 for setosa is the expected decrease in Petal.Length in cm of a setosa flower from the Petal.Length of a virginica flower of the same Petal.Width.
+
+The coefficient -0.5789 of the indicator variable x2.2 for versicolor is the expected decrease in Petal.Length in cm of a versicolor flower from the Petal.Length of a virginica flower of the same Petal.Width.
