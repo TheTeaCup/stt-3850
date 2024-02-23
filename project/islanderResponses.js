@@ -6,15 +6,6 @@ require("dotenv").config({
 
 const islanderData = require("./islanderData.json");
 
-let questions = [
-    "Are you male or female?",
-    "How many years old are you?",
-    "How tall are you in centimetres?",
-    "How many times have you married?",
-    "How many siblings do you have?",
-    "How many children do you have?",
-];  
-
 async function islanderResponses() {
   const browser = await puppeteer.launch({
     headless: false,
@@ -48,7 +39,6 @@ async function islanderResponses() {
       });
 
       // this gets the responses
-
       await page.waitForSelector(".taskresultquestion");
 
       // Extract question and response pairs
