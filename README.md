@@ -57,3 +57,5 @@
 - Positive : x increases and y increases
 - Negative : x decreases and y increases
 
+# Binomal Distrubution
+- 
