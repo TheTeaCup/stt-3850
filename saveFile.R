@@ -303,3 +303,257 @@ is_outlier <- function(x) {
 
 
 is_outlier(mtcars$wt)
+
+# Create a logical vector to identify 8-cylinder cars
+is8cyl <- mtcars$cyl == 8
+
+# Store weights of 8-cylinder cars in a new vector called wt_8cyl
+wt_8cyl <- mtcars$wt[is8cyl]
+
+# Calculate standard deviation of weights of 8-cylinder cars
+sd_wt_8cyl <- sd(wt_8cyl)
+
+# Interpret the standard deviation
+cat("Standard Deviation of Weights of 8-cylinder cars:", sd_wt_8cyl)
+
+
+# model <- lm(wt ~ mpg + as.factor(cyl), data = mtcars)
+# 
+# # Print the model summary
+# summary(model)
+
+qqnorm(mtcars$wt)
+qqline(mtcars$wt)
+
+# The social data (linkedin, facebook, views) has been created for you
+
+# linkedin exceeds 10 but facebook below 10
+linkedin > 10 & facebook < 10
+
+# When were one or both visited at least 12 times?
+linkedin >= 12 | facebook >= 12
+
+# When is views between 11 (exclusive) and 14 (inclusive)?
+views > 11 & views <= 14
+
+# li_df is pre-loaded in your workspace
+
+# Select the second column, named day2, from li_df: second
+second <- li_df$day2
+
+# Build a logical vector, TRUE if value in second is extreme: extremes
+extremes <- second > 25 | second < 5
+
+# Count the number of TRUEs in extremes
+sum(extremes)
+
+# Variables related to your last day of recordings
+medium <- "LinkedIn"
+num_views <- 14
+
+# Examine the if statement for medium
+if (medium == "LinkedIn") {
+  print("Showing LinkedIn information")
+}
+
+# Write the if statement for num_views
+if (num_views > 15) {
+  print("You are popular!")
+}
+
+# Variables related to your last day of recordings
+medium <- "LinkedIn"
+num_views <- 14
+
+# Control structure for medium
+if (medium == "LinkedIn") {
+  print("Showing LinkedIn information")
+} else {
+  print("Unknown medium")
+}
+
+
+
+# Control structure for num_views
+if (num_views > 15) {
+  print("You're popular!")
+} else {
+  print("Try to be more visible!")
+}
+
+# Variables related to your last day of recordings
+li <- 15
+fb <- 9
+
+# Code the control-flow construct
+if (li >= 15 & fb >= 15) {
+  sms <- 2 * (li + fb)
+} else if (li < 10 & fb < 10) {
+  sms <- 0.5 * (li + fb)
+} else {
+  sms <- li + fb
+}
+
+# Print the resulting sms to the console
+sms
+
+# Initialize the speed variable
+speed <- 64
+
+# Code the while loop
+while (speed > 30) {
+  print("Slow down!")
+  speed <- speed -7
+}
+
+# Print out the speed variable
+speed
+
+# Initialize the speed variable
+speed <- 64
+
+# Extend/adapt the while loop
+while (speed > 30) {
+  print(paste("Your speed is",speed))
+  if (speed > 48) {
+    print("Slow down big time!")
+    speed <- speed - 11
+  } else {
+    print("Slow down!")
+    speed <- speed - 6
+  }
+}
+
+# Initialize the speed variable
+speed <- 88
+
+while (speed > 30) {
+  print(paste("Your speed is", speed))
+  
+  # Break the while loop when speed exceeds 80
+  if (speed > 80) {
+    break
+  }
+  
+  if (speed > 48) {
+    print("Slow down big time!")
+    speed <- speed - 11
+  } else {
+    print("Slow down!")
+    speed <- speed - 6
+  }
+}
+
+# The linkedin vector has already been defined for you
+linkedin <- c(16, 9, 13, 5, 2, 17, 14)
+
+# Loop version 1
+for (li in linkedin) {
+  print(li)
+}
+
+# Loop version 2
+for (i in 1:length(linkedin)) {
+  print(linkedin[i])
+}
+
+# temp has already been defined in the workspace
+
+# Use lapply() to find each day's minimum temperature
+lapply(temp, min)
+
+# Use sapply() to find each day's minimum temperature
+sapply(temp, min)
+
+# Use lapply() to find each day's maximum temperature
+lapply(temp, max)
+
+# Use sapply() to find each day's maximum temperature
+sapply(temp, max)
+
+# The errors vector has already been defined for you
+errors <- c(1.9, -2.6, 4.0, -9.5, -3.4, 7.3)
+
+# Sum of absolute rounded values of errors
+sum(abs(round(errors)))
+
+# Don't edit these two lines
+vec1 <- c(1.5, 2.5, 8.4, 3.7, 6.3)
+vec2 <- rev(vec1)
+
+# Fix the error
+mean(c(abs(vec1), abs(vec2)))
+
+# The linkedin and facebook lists have already been created for you
+linkedin <- list(16, 9, 13, 5, 2, 17, 14)
+facebook <- list(17, 7, 5, 16, 8, 13, 14)
+
+# Convert linkedin and facebook to a vector: li_vec and fb_vec
+li_vec <- unlist(linkedin)
+fb_vec <- unlist(facebook)
+
+# Append fb_vec to li_vec: social_vec
+social_vec <- append(li_vec, fb_vec)
+
+# Sort social_vec
+sort(social_vec, decreasing = TRUE)
+
+# The emails vector has already been defined for you
+emails <- c("john.doe@ivyleague.edu", "education@world.gov", "dalai.lama@peace.org",
+            "invalid.edu", "quant@bigdatacollege.edu", "cookie.monster@sesame.tv")
+
+# Use grepl() to match for "edu"
+grepl("edu", emails)
+
+# Use grep() to match for "edu", save result to hits
+hits <- grep("edu", emails)
+
+# Subset emails using hits
+emails[hits]
+
+# The emails vector has already been defined for you
+emails <- c("john.doe@ivyleague.edu", "education@world.gov", "dalai.lama@peace.org",
+            "invalid.edu", "quant@bigdatacollege.edu", "cookie.monster@sesame.tv")
+
+# Use grepl() to match for .edu addresses more robustly
+grepl("@.*\\.edu$", emails)
+
+# Use grep() to match for .edu addresses more robustly, save result to hits
+hits <- grep("@.*\\.edu$", emails)
+
+# Subset emails using hits
+emails[hits]
+
+# The emails vector has already been defined for you
+emails <- c("john.doe@ivyleague.edu", "education@world.gov", "global@peace.org",
+            "invalid.edu", "quant@bigdatacollege.edu", "cookie.monster@sesame.tv")
+
+# Use sub() to convert the email domains to datacamp.edu
+sub("@.*\\.edu$", "@datacamp.edu", emails)
+
+# Get the current date: today
+today <- Sys.Date()
+
+# See what today looks like under the hood
+unclass(today)
+
+# Get the current time: now
+now <- Sys.time()
+
+# See what now looks like under the hood
+unclass(now)
+
+# Definition of character strings representing dates
+str1 <- "May 23, '96"
+str2 <- "2012-03-15"
+str3 <- "30/January/2006"
+
+# Convert the strings to dates: date1, date2, date3
+date1 <- as.Date(str1, format = "%b %d, '%y")
+date2 <- as.Date(str2)
+date3 <- as.Date(str3, format = "%d/%B/%Y")
+
+# Convert dates to formatted strings
+format(date1, "%A")
+format(date2, "%d")
+format(date3, "%b %Y")
