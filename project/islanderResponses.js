@@ -27,7 +27,7 @@ async function islanderResponses() {
       console.log(
         i +
           1 +
-          ". surverying islander: " +
+          ". surveying islander: " +
           islanderData[i].url.split("?id=")[1] +
           " of " +
           islanderData[i].village
@@ -38,20 +38,32 @@ async function islanderResponses() {
         document.querySelector("button[id=t2tab]").click();
       });
 
-      // this gets the responses
+      // Wait for the responses to load
       await page.waitForSelector(".taskresultquestion");
 
       // Extract question and response pairs
       const surveyResults = await page.evaluate(() => {
-        const questions = Array.from(
+        const questionElements = Array.from(
           document.querySelectorAll(".taskresultquestion")
-        ).map((question) => question.textContent.trim());
-        const responses = Array.from(
+        );
+        const responseElements = Array.from(
           document.querySelectorAll(".taskresultresponse")
-        ).map((response) => response.textContent.trim());
-        return questions.map((question, index) => ({
+        );
+
+        const uniqueQuestions = [];
+        const uniqueResponses = [];
+
+        for (let i = 0; i < questionElements.length; i++) {
+          const questionText = questionElements[i].textContent.trim();
+          if (!uniqueQuestions.includes(questionText)) {
+            uniqueQuestions.push(questionText);
+            uniqueResponses.push(responseElements[i].textContent.trim());
+          }
+        }
+
+        return uniqueQuestions.map((question, index) => ({
           question,
-          response: responses[index],
+          response: uniqueResponses[index],
         }));
       });
 
@@ -62,9 +74,9 @@ async function islanderResponses() {
         "islanderData-surveyed.json",
         JSON.stringify(islanderData, null, 2)
       );
-      
     }
-    console.log("All islanders responses recieved!");
+
+    console.log("All islanders responses received!");
 
     browser.close();
   }, 1000);

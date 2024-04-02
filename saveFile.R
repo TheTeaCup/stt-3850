@@ -557,3 +557,4 @@ date3 <- as.Date(str3, format = "%d/%B/%Y")
 format(date1, "%A")
 format(date2, "%d")
 format(date3, "%b %Y")
+
