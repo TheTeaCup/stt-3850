@@ -4,7 +4,11 @@ require("dotenv").config({
   path: "./.env",
 });
 
-const islanderData = require("./islanderData.json");
+const islanderData = require("./islands/IronBardIslanders.json");
+
+async function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 async function surveyIslander() {
   const browser = await puppeteer.launch({
@@ -34,9 +38,12 @@ async function surveyIslander() {
       );
       await page.goto(islanderData[i].url);
 
+      await page.waitForSelector("button[id=t2tab]");
       await page.evaluate(() => {
         document.querySelector("button[id=t2tab]").click();
       });
+
+      // await delay(1000);
 
       // this runs the survey
       await page.evaluate(() => {
@@ -48,7 +55,7 @@ async function surveyIslander() {
     console.log("All islanders surveyed!");
 
     browser.close();
-  }, 1000);
+  }, 2000);
 }
 
 (async () => {
