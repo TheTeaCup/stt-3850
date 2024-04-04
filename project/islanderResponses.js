@@ -4,7 +4,7 @@ require("dotenv").config({
   path: "./.env",
 });
 
-const islanderData = require("./islanderData.json");
+const islanderData = require("./islands/ProvidenceIslanders.json");
 
 async function islanderResponses() {
   const browser = await puppeteer.launch({
@@ -71,7 +71,7 @@ async function islanderResponses() {
 
       // Write the updated data back to the JSON file
       fs.writeFileSync(
-        "islanderData-surveyed.json",
+        "islands/ProvidenceIslanders-surveyed.json",
         JSON.stringify(islanderData, null, 2)
       );
     }
