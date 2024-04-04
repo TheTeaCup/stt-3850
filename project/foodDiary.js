@@ -33,22 +33,21 @@ async function foodDiary() {
     //       .click();
     //   });
 
-    await page.waitForSelector('.taskreportcard'); // Wait for the task report card to load
+    await page.waitForSelector(".taskreportcard"); // Wait for the task report card to load
 
     const foodItems = await page.evaluate(() => {
-      const foodElements = document.querySelectorAll('.taskrfr');
+      const foodElements = document.querySelectorAll(".taskrfr");
       const foodList = [];
-      foodElements.forEach(element => {
-        const foodName = element.querySelector('.taskrfood').textContent;
-        const foodWeight = element.querySelector('.taskrfoodweight').textContent;
+      foodElements.forEach((element) => {
+        const foodName = element.querySelector(".taskrfood").textContent;
+        const foodWeight =
+          element.querySelector(".taskrfoodweight").textContent;
         foodList.push({ foodName, foodWeight });
       });
       return foodList;
     });
 
-    console.log(foodItems)
-
-
+    console.log(foodItems);
   }, 500);
 }
 

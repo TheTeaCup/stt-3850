@@ -109,7 +109,6 @@ async function islanderResponses() {
             ?.response,
         }));
 
-
       islanderData[i].responses = filteredData;
 
       // Write the updated data back to the JSON file
