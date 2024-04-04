@@ -4,7 +4,7 @@ require("dotenv").config({
   path: "./.env",
 });
 
-const islanderData = require("./islands/BonneSanteIslanders.json");
+const islanderData = require("./islands/IronBardIslanders.json");
 
 async function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
