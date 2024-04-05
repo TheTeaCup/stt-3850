@@ -17,7 +17,7 @@ let questions = [
     "Which village were you born in?",
     "Which year were you born in?",
     "On a scale from 1 to 10, how attractive do you think you are to members of the opposite sex?",
-    "What is the predominant colour of your eyes",
+    "What is the predominant colour of your eyes?",
     "How many hours did you sleep last night?",
     "How many minutes did you spend doing low intensity physical activity in the last seven days?",
     "How many minutes did you spend doing moderate physical activity in the last seven days?",

@@ -4,7 +4,7 @@ require("dotenv").config({
   path: "./.env",
 });
 
-const islanderData = require("./islands/BonneSanteIslanders.json");
+const islanderData = require("./islands/ProvidenceIslanders.json");
 let questions = [
   "Are you male or female?",
   "How many years old are you?",
@@ -16,7 +16,7 @@ let questions = [
   "Which village were you born in?",
   "Which year were you born in?",
   "On a scale from 1 to 10, how attractive do you think you are to members of the opposite sex?",
-  "What is the predominant colour of your eyes",
+  "What is the predominant colour of your eyes?",
   "How many hours did you sleep last night?",
   "How many minutes did you spend doing low intensity physical activity in the last seven days?",
   "How many minutes did you spend doing moderate physical activity in the last seven days?",
@@ -113,7 +113,7 @@ async function islanderResponses() {
 
       // Write the updated data back to the JSON file
       fs.writeFileSync(
-        "islands/BonneSanteIslanders-surveyed.json",
+        "islands/ProvidenceIslanders-surveyed.json",
         JSON.stringify(islanderData, null, 2)
       );
     }
