@@ -59,3 +59,8 @@
 
 # Binomal Distrubution
 - 
+
+# Probability
+- var() variance
+- mean()
+- rbinom
