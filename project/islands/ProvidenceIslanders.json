@@ -447,7 +447,8 @@
   {
     "url": "https://islands.smp.uq.edu.au/islander.php?id=uxvf5lp3qy",
     "village": "biruwa",
-    "responses": ""
+    "responses": "",
+    "ignore": true
   },
   {
     "url": "https://islands.smp.uq.edu.au/islander.php?id=h7zbt5lljh",

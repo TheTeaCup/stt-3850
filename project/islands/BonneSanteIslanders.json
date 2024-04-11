@@ -77,7 +77,8 @@
   {
     "url": "https://islands.smp.uq.edu.au/islander.php?id=wyytk5y78g",
     "village": "valais",
-    "responses": ""
+    "responses": "",
+    "ignore": true
   },
   {
     "url": "https://islands.smp.uq.edu.au/islander.php?id=qzcqefeb7a",
@@ -447,7 +448,8 @@
   {
     "url": "https://islands.smp.uq.edu.au/islander.php?id=dn65r7sc9t",
     "village": "gordes",
-    "responses": ""
+    "responses": "",
+    "ignore": true
   },
   {
     "url": "https://islands.smp.uq.edu.au/islander.php?id=y5hludmvl3",
