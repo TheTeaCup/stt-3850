@@ -2,21 +2,12 @@ var XLSX = require("xlsx");
 
 console.log("Creating a excel sheet");
 
-const BonneSanteIslanders = require("./islands/BonneSanteIslanders-surveyed-1.json");
-const IronBardIslanders = require("./islands/IronBardIslanders-surveyed-1.json");
-const ProvidenceIslanders = require("./islands/ProvidenceIslanders-surveyed-1.json");
+const BonneSanteIslanders = require("./islands/BonneSanteIslanders-surveyed-2.json");
+const IronBardIslanders = require("./islands/IronBardIslanders-surveyed-2.json");
+const ProvidenceIslanders = require("./islands/ProvidenceIslanders-surveyed-2.json");
 
 let questions = [
-  "Blood Pressure",
-  "Skin Colouration",
-  "Waist Circumference",
-  "Blood Glucose",
-  "Blood Cortisol",
-  "Openness",
-  "Conscientiousness",
-  "Extraversion",
-  "Agreeableness",
-  "Neuroticism",
+  "do you have diabetes?",
 ];
 
 let header = [
@@ -71,6 +62,6 @@ ProvidenceIslanders.forEach((islander) => {
 var ws = XLSX.utils.aoa_to_sheet(ws_data);
 XLSX.utils.book_append_sheet(workbook, ws, "Islanders");
 
-XLSX.writeFile(workbook, "islanders-1.xlsx");
+XLSX.writeFile(workbook, "islanders-2.xlsx");
 
 console.log("Excel sheet created!");

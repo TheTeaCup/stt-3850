@@ -403,7 +403,8 @@
   {
     "url": "https://islands.smp.uq.edu.au/islander.php?id=chsgz37svr",
     "village": "gordes",
-    "responses": ""
+    "responses": "",
+    "ignore": true
   },
   {
     "url": "https://islands.smp.uq.edu.au/islander.php?id=m5grd2dtxj",
@@ -509,7 +510,8 @@
   {
     "url": "https://islands.smp.uq.edu.au/islander.php?id=uw2k9nqtf3",
     "village": "maeva",
-    "responses": ""
+    "responses": "",
+    "ignore": true
   },
   {
     "url": "https://islands.smp.uq.edu.au/islander.php?id=jaf2vpeqqb",
