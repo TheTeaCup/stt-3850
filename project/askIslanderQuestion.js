@@ -6,8 +6,6 @@ require("dotenv").config({
 
 const islanderData = require("./islands/BonneSanteIslanders.json");
 
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-
 async function surveyIslander() {
   const browser = await puppeteer.launch({
     headless: false,
@@ -76,7 +74,6 @@ async function surveyIslander() {
           "islands/BonneSanteIslanders-surveyed-2.json",
           JSON.stringify(islanderData, null, 2)
         );
-        // await delay(1500);
       }
     }
     console.log("All islanders surveyed!");

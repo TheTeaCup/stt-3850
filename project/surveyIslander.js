@@ -6,10 +6,6 @@ require("dotenv").config({
 
 const islanderData = require("./islands/BonneSanteIslanders.json");
 
-async function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 async function surveyIslander() {
   const browser = await puppeteer.launch({
     headless: false,
@@ -42,8 +38,6 @@ async function surveyIslander() {
       await page.evaluate(() => {
         document.querySelector("button[id=t2tab]").click();
       });
-
-      // await delay(1000);
 
       // this runs the survey
       await page.evaluate(() => {
