@@ -15,3 +15,6 @@
 
 # Modulo
 28 %% 6
+
+# Rounding
+round(3.14159, 2)
