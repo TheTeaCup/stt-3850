@@ -1,0 +1,107 @@
+---
+title: "Data Visualization with ggplot2"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+Create a folder in your desktop.  Download the file FlightDelays.csv from AsULearn to this folder.  Start R Studio then set the working directory to this folder by clicking Session in R Studio, selecting Set Working Directory then Choose Directory.
+
+Open the file using the following command:
+
+```{r}
+flightdata<-read.csv("FlightDelays.csv")
+```
+
+This command creates the R object flightdata of dataframe class. To see the content of the first few rows of this object, type
+
+```{r}
+head(flightdata)
+```
+
+In the previous lecture, we created some basic graphs such as bar graphs, histogram and boxplot using the graphical commands that are part of the base package that comes with the installation of R.
+
+In particular, we did the following in the previous lecture:
+
+We used the attach() command to be able to access all columns or variables in the dataframe.
+
+```{r}
+attach(flightdata)
+```
+
+We created the bar chart for the Carrier data using the barplot() command:
+
+```{r}
+barplot(table(Carrier))
+```
+
+We created the histogram and the boxplot of the Delay data using the hist() and the boxplot() commands:
+
+To quickly visualize the data, use either hist() or boxplot().
+
+```{r}
+hist(Delay)
+boxplot(Delay)
+```
+
+After discussing some of these built-in graphical commands within the R base package, we talked about creating more customizable and better looking graphs or visualizations using the ggplot() command within the ggplot2 package. 
+
+To create a better looking bar graph, for example, we can do the following:
+
+```{r}
+library(ggplot2)  #needed to use the ggplot() command
+ggplot(data=flightdata,mapping=aes(x=Carrier))+
+  geom_bar()
+```
+
+To create a better looking histogram, we can do the following:
+
+```{r}
+ggplot(data=flightdata,mapping=aes(x=Delay))+
+  geom_histogram(color="white")
+```
+To create a better looking boxplot of the Delay data, we can do the following:
+
+```{r}
+ggplot(data=flightdata,mapping=aes(y=Delay))+
+  geom_boxplot()
+```
+
+To see the histogram for the Delay data for each of the two carriers for comparison, we can add a facet_wrap layer to the previous ggplot() as follows:
+
+```{r}
+ggplot(data=flightdata,mapping=aes(x=Delay))+
+  geom_histogram(color="white")+
+  facet_wrap(~Carrier)
+```
+
+To create a side-by-side boxplots of the Delay data for each of the two carriers for easy comparison, we can do the following:
+
+
+```{r}
+ggplot(data=flightdata,mapping=aes(x=Carrier,y=Delay))+
+  geom_boxplot()
+```
+
+Note: If the categorical variable uses numerical values as codes for the categories, use factor(name of categorical variable) so the variable is treated as numerical variable.
+
+To examine relationships between two categorical variables, we can do something similar to the following:
+
+```{r}
+ggplot(data=flightdata,mapping=aes(x=Delayed30,fill=Carrier))+
+  geom_bar()
+```
+
+We can switch the role of the two categorical variables:
+```{r}
+ggplot(data=flightdata,mapping=aes(x=Carrier,fill=Delayed30))+
+  geom_bar()
+```
+
+Both ggplots showing the barplots for the two categorical variables
+show that there seem to be no rlationship between the Carrier and whether the flight is delayed for at least 30 minutes or not (Delayed30 variable) since the proportion of AA flights delayed for 30 minutes is about the same as the proportion of UA flights delayed for at least 30 minutes as shown in the last side-by-side  barplots.
+
+```{r}
+detach(flightdata)
+```
+
