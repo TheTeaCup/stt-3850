@@ -1,0 +1,64 @@
+---
+title: "Functions in R"
+output: html_notebook
+---
+R has many built-in functions such as the mean(), median(), sd(), quantile(), etc
+```{r}
+x <- iris$Petal.Length
+mean(x)
+```
+
+We can create user-defined functions in R using the function command.
+
+```{r}
+average <- function(x)
+{n<-length(x)
+ val <- sum(x)/n
+ return(val)}
+```
+To check that the new function average() is working, let's try it with the iris$Petal.Length data.
+```{r}
+average(iris$Petal.Length)
+mean(iris$Petal.Length)
+```
+As another example, let's create a new function named zscore that will compute the zscores of the elements of a numeric input y.
+```{r}
+zscore <- function(y)
+{out <- (y-mean(y))/sd(y)
+ return(out)}
+```
+
+To test this function, we can again use the iris$Petal.Length as the input to this function.
+```{r}
+zscore(iris$Petal.Length)
+```
+A function can have more than one input. As an example, let's create a function that will display the smaller mean of 2 vectors x and y.
+
+```{r}
+Min_mean <- function(x,y)
+{x1<-mean(x)
+x2<-mean(y)
+ if (x1 < x2) return(list(x1,"first input has the smaller mean")) else return(list(x2,"2nd input has the smaller mean"))}
+
+```
+
+To test this function, we will call this function using the iris$Petal.Length and iris$Petal.Width as input.
+
+```{r}
+Min_mean(iris$Petal.Length,iris$Petal.Width)
+```
+As an exercise, create a function that will convert measurements from cm to inches or vice-versa depending on the unit of measurement of the data.  Name the function convert with input x and unit (a non-numeric object).  Test this function using the iris$Petal.Length data which are in "cm".  
+
+Here's the R chunk that will create this function:
+```{r}
+convert <- function(x,unit)
+{if (unit =="cm") {out <- x/2.54
+                  return(list(out,"inches"))} else if                        (unit == "inches"){out <- x*2.54
+                      return(list(out,"cm"))} 
+}
+```
+
+This will test the function: 
+```{r}
+convert(iris$Petal.Length,"cm")
+```
