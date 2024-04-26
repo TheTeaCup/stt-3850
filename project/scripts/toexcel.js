@@ -2,9 +2,9 @@ var XLSX = require("xlsx");
 
 console.log("Creating a excel sheet");
 
-const BonneSanteIslanders = require("./islands/BonneSanteIslanders-surveyed-2.json");
-const IronBardIslanders = require("./islands/IronBardIslanders-surveyed-2.json");
-const ProvidenceIslanders = require("./islands/ProvidenceIslanders-surveyed-2.json");
+const BonneSanteIslanders = require("../islands/BonneSanteIslanders-surveyed-2.json");
+const IronBardIslanders = require("../islands/IronBardIslanders-surveyed-2.json");
+const ProvidenceIslanders = require("../islands/ProvidenceIslanders-surveyed-2.json");
 
 let questions = [
   "do you have diabetes?",
