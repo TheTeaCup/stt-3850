@@ -79,7 +79,6 @@ async function islanderResponses() {
 
                 const taskText = taskResult.textContent.trim();
                 if (taskText) {
-                  // Split the taskText by newline characters to extract the answer
                   const taskLines = taskText.split("\n");
                   const answer = taskLines[2]; // Assuming the answer is always at index 2
                   if (answer) {
